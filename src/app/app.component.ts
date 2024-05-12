@@ -24,11 +24,10 @@ export class AppComponent {
     { id: 3, name: 'Charlie' },
   ])
 
+  readonlyItems = this.items.asReadonly();
+
   clearItems() {
-    var removed = this.items().splice(0);
-    var mutated = this.items();
-    // this.items.set([]);
-    console.log({ removed, mutated })
+    this.items.set([]);
   }
 
   newItemName = signal('');
@@ -41,7 +40,8 @@ export class AppComponent {
   }
 
   handleClick() {
-    console.log(this.items());
+    console.log('this.items()', this.items());
+    console.log('this.readonlyItems()', this.readonlyItems());
   }
 
   nameFilter = signal('');
