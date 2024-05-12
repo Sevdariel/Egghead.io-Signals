@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Signal, computed, signal } from '@angular/core';
+import { Component, Signal, computed, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ItemsService } from './items.service';
 
 @Component({
   selector: 'app-root',
@@ -14,34 +15,18 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  itemsSvc = inject(ItemsService);
   title = 'Egghead.io-Signals';
 
-  lastItem = computed(() => this.items().slice(-1)[0]);
-
-  items = signal([
-    { id: 1, name: 'Andy' },
-    { id: 2, name: 'Bob' },
-    { id: 3, name: 'Charlie' },
-  ])
-
-  readonlyItems = this.items.asReadonly();
-
-  clearItems() {
-    this.items.set([]);
-  }
+  lastItem = computed(() => this.itemsSvc.items().slice(-1)[0]);
 
   newItemName = signal('');
   updateNewItemName($event: Event) {
     this.newItemName.set(($event.target as HTMLInputElement)['value']);
   }
 
-  append(name: string) {
-    this.items.update(prev => [...prev, { id: prev.length + 1, name: name }]);
-  }
-
   handleClick() {
-    console.log('this.items()', this.items());
-    console.log('this.readonlyItems()', this.readonlyItems());
+    console.log('this.items()', this.itemsSvc.items());
   }
 
   nameFilter = signal('');
@@ -57,7 +42,7 @@ export class AppComponent {
 
     // case-insensitive
     const nameFilter = this.nameFilter().toLowerCase();
-    return this.items().filter(item => item.name.toLowerCase().includes(nameFilter));
+    return this.itemsSvc.items().filter(item => item.name.toLowerCase().includes(nameFilter));
   })
 
   ascOrder = signal(false);

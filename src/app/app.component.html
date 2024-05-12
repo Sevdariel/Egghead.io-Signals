@@ -2,8 +2,8 @@
 last: {{ lastItem()?.name }}
 
 <button (click)="handleClick()">log items</button>
-<button (click)="clearItems()">clear items</button>
-<button (click)="append(newItemName())">append item</button>
+<button (click)="itemsSvc.clearItems()">clear items</button>
+<button (click)="itemsSvc.append(newItemName())">append item</button>
 
 <input type="text" [value]="nameFilter()" (input)="updateNameFilter($event)"/>
 <input type="text" [value]="newItemName()" (input)="updateNewItemName($event)"/>
