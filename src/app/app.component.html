@@ -1,12 +1,14 @@
 <h1>Angular signals</h1>
-last: {{ lastItem().name }}
+last: {{ lastItem()?.name }}
 
 <button (click)="handleClick()">log items</button>
+<button (click)="clearItems()">clear items</button>
+<button (click)="append(newItemName())">append item</button>
 
+<input type="text" [value]="nameFilter()" (input)="updateNameFilter($event)"/>
+<input type="text" [value]="newItemName()" (input)="updateNewItemName($event)"/>
 <ul>
   @for(item of visibleItems();track 'id') {
   <li>{{item.name}}</li>
   }
 </ul>
-
-{{b()}}

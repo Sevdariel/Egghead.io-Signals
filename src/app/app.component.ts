@@ -24,11 +24,31 @@ export class AppComponent {
     { id: 3, name: 'Charlie' },
   ])
 
+  clearItems() {
+    var removed = this.items().splice(0);
+    var mutated = this.items();
+    // this.items.set([]);
+    console.log({ removed, mutated })
+  }
+
+  newItemName = signal('');
+  updateNewItemName($event: Event) {
+    this.newItemName.set(($event.target as HTMLInputElement)['value']);
+  }
+
+  append(name: string) {
+    this.items.update(prev => [...prev, { id: prev.length + 1, name: name }]);
+  }
+
   handleClick() {
     console.log(this.items());
   }
 
   nameFilter = signal('');
+
+  updateNameFilter($event: Event) {
+    this.nameFilter.set(($event.target as HTMLInputElement)['value']);
+  }
 
   //items() + nameFilter()
   filteredItems = computed(() => {
@@ -51,7 +71,7 @@ export class AppComponent {
 
   // Circular dependency in computed signal will cause angular error
   // Detected cycle in computations
-  a = signal('John');
-  b: Signal<string> = computed(() => this.a() + this.c());
-  c: Signal<string> = computed(() => this.a() + this.b());
+  // a = signal('John');
+  // b: Signal<string> = computed(() => this.a() + this.c());
+  // c: Signal<string> = computed(() => this.a() + this.b());
 }
