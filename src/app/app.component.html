@@ -4,7 +4,9 @@ last: {{ lastItem().name }}
 <button (click)="handleClick()">log items</button>
 
 <ul>
-  @for(item of filteredItems();track 'id') {
+  @for(item of visibleItems();track 'id') {
   <li>{{item.name}}</li>
   }
 </ul>
+
+{{b()}}

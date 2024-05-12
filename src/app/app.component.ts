@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { Component, Signal, computed, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -28,7 +28,7 @@ export class AppComponent {
     console.log(this.items());
   }
 
-  nameFilter = signal('Andy');
+  nameFilter = signal('');
 
   //items() + nameFilter()
   filteredItems = computed(() => {
@@ -39,4 +39,19 @@ export class AppComponent {
     const nameFilter = this.nameFilter().toLowerCase();
     return this.items().filter(item => item.name.toLowerCase().includes(nameFilter));
   })
+
+  ascOrder = signal(false);
+
+  visibleItems = computed(() => {
+    const order = this.ascOrder() ? 1 : -1;
+    return this.filteredItems().sort((a, b) => {
+      return a.name.localeCompare(b.name) * order;
+    });
+  });
+
+  // Circular dependency in computed signal will cause angular error
+  // Detected cycle in computations
+  a = signal('John');
+  b: Signal<string> = computed(() => this.a() + this.c());
+  c: Signal<string> = computed(() => this.a() + this.b());
 }
