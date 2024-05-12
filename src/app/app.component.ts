@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -16,11 +16,7 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'Egghead.io-Signals';
 
-  #item = signal<string | undefined>('hey');
-  get item() {
-    return this.#item();
-  }
-
+  lastItem = computed(() => this.items().slice(-1)[0]);
 
   items = signal([
     { id: 1, name: 'Andy' },
@@ -31,4 +27,16 @@ export class AppComponent {
   handleClick() {
     console.log(this.items());
   }
+
+  nameFilter = signal('Andy');
+
+  //items() + nameFilter()
+  filteredItems = computed(() => {
+    // case-sensitive
+    // return this.items().filter(item => item.name.includes(this.nameFilter()));
+
+    // case-insensitive
+    const nameFilter = this.nameFilter().toLowerCase();
+    return this.items().filter(item => item.name.toLowerCase().includes(nameFilter));
+  })
 }

@@ -1,15 +1,10 @@
 <h1>Angular signals</h1>
-{{ item }}
-
-<!-- {{item().toLowerCase()}}  Object is possibly undefined -->
-@if(item){
-{{ item.toLowerCase()}}
-}
+last: {{ lastItem().name }}
 
 <button (click)="handleClick()">log items</button>
 
 <ul>
-  @for(item of items();track 'id') {
+  @for(item of filteredItems();track 'id') {
   <li>{{item.name}}</li>
   }
 </ul>
