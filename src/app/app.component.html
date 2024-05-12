@@ -1,12 +1,13 @@
 <h1>Angular signals</h1>
-{{ item() }}
+{{ item }}
 
 <!-- {{item().toLowerCase()}}  Object is possibly undefined -->
-{{ item()?.toLowerCase()}}
+@if(item){
+{{ item.toLowerCase()}}
+}
 
 <ul>
   @for(item of items();track 'id') {
   <li>{{item.name}}</li>
-
   }
 </ul>

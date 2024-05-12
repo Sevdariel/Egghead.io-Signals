@@ -16,7 +16,11 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'Egghead.io-Signals';
 
-  item = signal<string | undefined>('hey');
+  #item = signal<string | undefined>('hey');
+  get item() {
+    return this.#item();
+  }
+
 
   items = signal([
     { id: 1, name: 'Andy' },
