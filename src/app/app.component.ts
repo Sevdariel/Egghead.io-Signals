@@ -9,12 +9,18 @@ import { RouterOutlet } from '@angular/router';
     CommonModule,
     RouterOutlet,
   ],
-  
+
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'Egghead.io-Signals';
 
-  item = signal<string | undefined>(undefined);
+  item = signal<string | undefined>('hey');
+
+  items = signal([
+    { id: 1, name: 'Andy' },
+    { id: 2, name: 'Bob' },
+    { id: 3, name: 'Charlie' },
+  ])
 }
