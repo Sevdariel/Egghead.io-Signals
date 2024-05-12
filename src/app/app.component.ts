@@ -27,4 +27,8 @@ export class AppComponent {
     { id: 2, name: 'Bob' },
     { id: 3, name: 'Charlie' },
   ])
+
+  handleClick() {
+    console.log(this.items());
+  }
 }
