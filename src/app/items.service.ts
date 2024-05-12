@@ -1,4 +1,5 @@
 import { Injectable, effect, signal, untracked } from '@angular/core';
+import _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,11 @@ export class ItemsService {
     { id: 1, name: 'Andy' },
     { id: 2, name: 'Bob' },
     { id: 3, name: 'Charlie' },
-  ])
-
+  ],
+    //{ equal: _.isEqual }
+    // ], {equal: (prev, curr) => Object.is(prev, curr)})
+    // Object.is compares reference
+  );
   items = this.#items.asReadonly();
 
   append(name: string) {
@@ -23,6 +27,10 @@ export class ItemsService {
   }
 
   clearItems() {
-    this.#items.set([]);
+    this.#items.set([
+      { id: 1, name: 'Andy' },
+      { id: 2, name: 'Bob' },
+      { id: 3, name: 'Charlie' },
+    ]);
   }
 }
